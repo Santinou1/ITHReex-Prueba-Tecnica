@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "ithreex-employees-api-2025",
+		"name": "ITHReex - Employees API",
+		"description": "Prueba Técnica para ITHReex\nDesarrollador: Santino Ursino\n\nColección completa de endpoints para la API REST de gestión de empleados.\n\nBase URL: http://localhost:4000/api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "health"]
+						},
+						"description": "Verificar que el servidor está funcionando correctamente"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para verificar el estado del servidor"
+		},
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Obtener todos los empleados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees"]
+						},
+						"description": "Obtiene la lista completa de todos los empleados registrados en el sistema.\n\n**Response:**\n```json\n{\n  \"success\": true,\n  \"data\": [...],\n  \"total\": 20\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar empleados por área",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employees?area=Desarrollo",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees"],
+							"query": [
+								{
+									"key": "area",
+									"value": "Desarrollo",
+									"description": "Área de trabajo (Desarrollo, Ventas, Marketing, etc.)"
+								}
+							]
+						},
+						"description": "Filtra empleados por área de trabajo.\n\n**Áreas disponibles:**\n- Desarrollo\n- Recursos Humanos\n- Ventas\n- Marketing\n- Diseño\n- Administración"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener empleado por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employees/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees", "1"]
+						},
+						"description": "Obtiene la información detallada de un empleado específico por su ID.\n\n**Response exitoso (200):**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"id\": 1,\n    \"nombreCompleto\": \"Juan Pérez García\",\n    \"edad\": 35,\n    \"area\": \"Desarrollo\",\n    \"antiguedad\": 5,\n    \"telefono\": \"+54 11 2345-6789\"\n  }\n}\n```\n\n**Response error (404):**\n```json\n{\n  \"success\": false,\n  \"error\": \"Empleado no encontrado\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear nuevo empleado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombreCompleto\": \"María López Fernández\",\n  \"edad\": 28,\n  \"area\": \"Marketing\",\n  \"antiguedad\": 2,\n  \"telefono\": \"+54 11 9999-8888\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees"]
+						},
+						"description": "Crea un nuevo empleado en el sistema.\n\n**Validaciones:**\n- `nombreCompleto`: String no vacío (requerido)\n- `edad`: Número entre 18 y 100 (requerido)\n- `area`: String no vacío (requerido)\n- `antiguedad`: Número >= 0 (requerido)\n- `telefono`: String no vacío (requerido)\n\n**Response exitoso (201):**\n```json\n{\n  \"success\": true,\n  \"data\": {...},\n  \"message\": \"Empleado creado exitosamente\"\n}\n```\n\n**Response error (400):**\n```json\n{\n  \"success\": false,\n  \"error\": [\n    \"El nombre completo es requerido\",\n    \"La edad debe estar entre 18 y 100 años\"\n  ]\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar empleado",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"edad\": 36,\n  \"antiguedad\": 6\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/employees/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees", "1"]
+						},
+						"description": "Actualiza la información de un empleado existente.\n\n**Nota:** Todos los campos son opcionales. Solo se actualizarán los campos enviados.\n\n**Response exitoso (200):**\n```json\n{\n  \"success\": true,\n  \"data\": {...},\n  \"message\": \"Empleado actualizado exitosamente\"\n}\n```\n\n**Response error (404):**\n```json\n{\n  \"success\": false,\n  \"error\": \"Empleado no encontrado\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar empleado completo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombreCompleto\": \"Juan Pérez García\",\n  \"edad\": 36,\n  \"area\": \"Desarrollo Senior\",\n  \"antiguedad\": 6,\n  \"telefono\": \"+54 11 2345-6789\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/employees/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees", "1"]
+						},
+						"description": "Actualiza todos los campos de un empleado."
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar empleado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employees/21",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees", "21"]
+						},
+						"description": "Elimina un empleado del sistema.\n\n**Response exitoso (200):**\n```json\n{\n  \"success\": true,\n  \"message\": \"Empleado eliminado exitosamente\"\n}\n```\n\n**Response error (404):**\n```json\n{\n  \"success\": false,\n  \"error\": \"Empleado no encontrado\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener estadísticas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employees/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees", "stats"]
+						},
+						"description": "Obtiene estadísticas generales de los empleados:\n- Total de empleados\n- Cantidad por área\n- Promedio de edad\n- Promedio de antigüedad\n\n**Response:**\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"total\": 20,\n    \"porArea\": [\n      { \"area\": \"Desarrollo\", \"total\": \"5\" },\n      { \"area\": \"Ventas\", \"total\": \"3\" }\n    ],\n    \"promedioEdad\": 33.5,\n    \"promedioAntiguedad\": 5.4\n  }\n}\n```"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para la gestión completa de empleados (CRUD + Estadísticas)"
+		},
+		{
+			"name": "Error Handling",
+			"item": [
+				{
+					"name": "Ruta no encontrada (404)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/ruta-inexistente",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "ruta-inexistente"]
+						},
+						"description": "Ejemplo de respuesta cuando se accede a una ruta que no existe.\n\n**Response (404):**\n```json\n{\n  \"success\": false,\n  \"error\": \"Ruta no encontrada\",\n  \"path\": \"/ruta-inexistente\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Empleado no encontrado (404)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/employees/999",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "employees", "999"]
+						},
+						"description": "Ejemplo de respuesta cuando se busca un empleado que no existe."
+					},
+					"response": []
+				},
+				{
+					"name": "Datos inválidos (400)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombreCompleto\": \"\",\n  \"edad\": 15,\n  \"area\": \"\",\n  \"antiguedad\": -1,\n  \"telefono\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": ["{{baseUrl}}"],
+							"path": ["employees"]
+						},
+						"description": "Ejemplo de respuesta cuando se envían datos inválidos.\n\n**Response (400):**\n```json\n{\n  \"success\": false,\n  \"error\": [\n    \"El nombre completo es requerido\",\n    \"La edad debe estar entre 18 y 100 años\",\n    \"El área es requerida\",\n    \"La antigüedad debe ser mayor o igual a 0\",\n    \"El teléfono es requerido\"\n  ]\n}\n```"
+					},
+					"response": []
+				}
+			],
+			"description": "Ejemplos de manejo de errores y respuestas de error"
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:4000",
+			"type": "string"
+		}
+	]
+}
