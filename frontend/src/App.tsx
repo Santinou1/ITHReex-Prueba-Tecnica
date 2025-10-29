@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import EmployeeTable from "./components/EmployeeTable";
 import EmployeeForm from "./components/EmployeeForm";
+import EmployeeDetail from "./components/EmployeeDetail";
 import Statistics from "./components/Statistics";
 import employeesService from "./services/employees.service";
 import type { Employee, EmployeeFormData } from "./types/employee.types";
@@ -12,6 +13,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(null);
   const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
   const [filterArea, setFilterArea] = useState("");
 
@@ -111,6 +114,16 @@ function App() {
     setEditingEmployee(null);
   };
 
+  const handleViewDetail = (id: number) => {
+    setSelectedEmployeeId(id);
+    setShowDetail(true);
+  };
+
+  const handleCloseDetail = () => {
+    setShowDetail(false);
+    setSelectedEmployeeId(null);
+  };
+
   return (
     <div className="app">
       <Header
@@ -153,6 +166,7 @@ function App() {
               employees={employees}
               onEdit={handleEdit}
               onDelete={handleDelete}
+              onViewDetail={handleViewDetail}
               loading={loading}
             />
           </>
@@ -165,6 +179,13 @@ function App() {
           onSubmit={editingEmployee ? handleUpdate : handleCreate}
           onCancel={handleCloseForm}
           loading={loading}
+        />
+      )}
+
+      {showDetail && selectedEmployeeId && (
+        <EmployeeDetail
+          employeeId={selectedEmployeeId}
+          onClose={handleCloseDetail}
         />
       )}
     </div>

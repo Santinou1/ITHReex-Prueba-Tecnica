@@ -5,6 +5,7 @@ interface EmployeeTableProps {
   employees: Employee[];
   onEdit: (employee: Employee) => void;
   onDelete: (id: number) => void;
+  onViewDetail: (id: number) => void;
   loading: boolean;
 }
 
@@ -12,6 +13,7 @@ export default function EmployeeTable({
   employees,
   onEdit,
   onDelete,
+  onViewDetail,
   loading,
 }: EmployeeTableProps) {
   if (loading) {
@@ -49,7 +51,15 @@ export default function EmployeeTable({
           {employees.map((employee) => (
             <tr key={employee.id}>
               <td>{employee.id}</td>
-              <td className="name-cell">{employee.nombreCompleto}</td>
+              <td className="name-cell">
+                <button
+                  className="name-button"
+                  onClick={() => onViewDetail(employee.id)}
+                  title="Ver detalles"
+                >
+                  {employee.nombreCompleto}
+                </button>
+              </td>
               <td>{employee.edad} años</td>
               <td>
                 <span className="area-badge">{employee.area}</span>

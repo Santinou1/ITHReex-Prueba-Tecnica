@@ -47,6 +47,25 @@
   color: var(--text-dark);
 }
 
+.name-button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.name-button:hover {
+  text-decoration-color: var(--primary-color);
+  color: #0277b5;
+}
+
 .area-badge {
   display: inline-block;
   padding: 0.375rem 0.75rem;
