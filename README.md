@@ -47,7 +47,7 @@ Además, se desarrolló un **frontend completo en React** con:
 
 ```bash
 # 1. Clonar el repositorio
-git clone <repository-url>
+git clone https://github.com/Santinou1/ITHReex-Prueba-Tecnica.git
 cd IthReex
 
 # 2. Levantar todos los servicios
